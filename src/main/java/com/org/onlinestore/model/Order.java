@@ -26,21 +26,21 @@ public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "orderId")
-	private UUID id;
+	private UUID orderId;
 	
 	@Column(name = "moment")
 	private LocalDateTime moment;
 	
-	@Column(name = "order-status")
+	@Column(name = "order_status")
 	private Integer orderStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
 	
-	@OneToMany(mappedBy = "id.order")
+	@OneToMany(mappedBy = "orderItemId.order")
 	private Set<OrderItem> items = new HashSet<>();
 	
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
@@ -50,19 +50,19 @@ public class Order implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Order(UUID id, LocalDateTime moment, OrderStatus orderStatus, User client) {
-		this.id = id;
+	public Order(UUID orderId, LocalDateTime moment, OrderStatus orderStatus, User client) {
+		this.orderId = orderId;
 		this.moment = moment;
 		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 
 	public UUID getOrderId() {
-		return id;
+		return orderId;
 	}
 
-	public void setOrderId(UUID id) {
-		this.id = id;
+	public void setOrderId(UUID orderId) {
+		this.orderId = orderId;
 	}
 
 	public LocalDateTime getMoment() {

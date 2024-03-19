@@ -17,7 +17,7 @@ public class OrderItem implements Serializable{
 
 	@EmbeddedId
 	@Column(name = "orderItemId")
-	private OrderItemPK id = new OrderItemPK();
+	private OrderItemPK orderItemId = new OrderItemPK();
 	
 	private Integer quantity;
 	private Double price;
@@ -26,37 +26,37 @@ public class OrderItem implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderItem(Order order, Product product, OrderItemPK id, Integer quantity, Double price) {
-		id.setOrder(order);
-		id.setProduct(product);
-		this.id = id;
+	public OrderItem(Order order, Product product, OrderItemPK orderItemId, Integer quantity, Double price) {
+		orderItemId.setOrder(order);
+		orderItemId.setProduct(product);
+		this.orderItemId = orderItemId;
 		this.quantity = quantity;
 		this.price = price;
 	}
 
 	@JsonIgnore
 	public Order getOrder() {
-		return id.getOrder();
+		return orderItemId.getOrder();
 	}
 	
 	public void setOrder(Order order){
-		id.setOrder(order);
+		orderItemId.setOrder(order);
 	}
 	
 	public Product getProduct() {
-		return id.getProduct();
+		return orderItemId.getProduct();
 	}
 	
 	public void setProduct(Product product) {
-		id.setProduct(product);
+		orderItemId.setProduct(product);
 	}
 	
-	public OrderItemPK getId() {
-		return id;
+	public OrderItemPK getOrderItemId() {
+		return orderItemId;
 	}
 
-	public void setId(OrderItemPK id) {
-		this.id = id;
+	public void setOrderItemId(OrderItemPK orderItemId) {
+		this.orderItemId = orderItemId;
 	}
 
 	public Integer getQuantity() {

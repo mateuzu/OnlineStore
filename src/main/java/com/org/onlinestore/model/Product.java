@@ -12,9 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -24,9 +22,9 @@ public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "productId")
-	private UUID id;
+	private UUID productId;
 	
 	@Column(name = "name")
 	private String name;
@@ -40,21 +38,18 @@ public class Product implements Serializable{
 	@Column(name = "urlImg")
 	private String urlImg;
 	
-	@ManyToMany
-	@JoinTable(name = "TB_PRODUCT_CATEGORY", 
-	joinColumns = @JoinColumn(name = "product_id"),
-	inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> categories = new HashSet<>();
+	@ManyToOne
+	private Category category;
 	
-	@OneToMany(mappedBy = "id.product")
+	@OneToMany(mappedBy = "orderItemId.product")
 	private Set<OrderItem> items = new HashSet<>();
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(UUID id, String name, String description, Double price, String urlImg) {
-		this.id = id;
+	public Product(UUID productId, String name, String description, Double price, String urlImg) {
+		this.productId = productId;
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -62,11 +57,11 @@ public class Product implements Serializable{
 	}
 
 	public UUID getProductId() {
-		return id;
+		return productId;
 	}
 
-	public void setProductId(UUID id) {
-		this.id = id;
+	public void setProductId(UUID productId) {
+		this.productId = productId;
 	}
 
 	public String getName() {
@@ -101,8 +96,12 @@ public class Product implements Serializable{
 		this.urlImg = urlImg;
 	}
 
-	public Set<Category> getCategories() {
-		return categories;
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@JsonIgnore

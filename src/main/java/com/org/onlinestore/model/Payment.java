@@ -22,9 +22,9 @@ public class Payment implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "paymentId")
-	private UUID id;
+	private UUID paymentId;
 	
 	@Column(name = "moment")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
@@ -39,18 +39,18 @@ public class Payment implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Payment(UUID id, LocalDateTime moment, Order order) {
-		this.id = id;
+	public Payment(UUID paymentId, LocalDateTime moment, Order order) {
+		this.paymentId = paymentId;
 		this.moment = moment;
 		this.order = order;
 	}
 
 	public UUID getPaymentId() {
-		return id;
+		return paymentId;
 	}
 
-	public void setPaymentId(UUID id) {
-		this.id = id;
+	public void setPaymentId(UUID paymentId) {
+		this.paymentId = paymentId;
 	}
 
 	public LocalDateTime getMoment() {

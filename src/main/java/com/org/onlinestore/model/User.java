@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.org.onlinestore.controller.dto.LoginRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,13 +23,15 @@ import jakarta.validation.constraints.Email;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "userId")
-	private UUID id;
+	private UUID userId;
 	private String username;
 	
 	@Email
 	private String email;
+	
+	@JsonIgnore
 	private String password;
 	
 	@JsonIgnore
@@ -37,19 +42,19 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(UUID id, String username, String email, String password) {
-		this.id = id;
+	public User(UUID userId, String username, String email, String password) {
+		this.userId = userId;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 	}
 
 	public UUID getUserId() {
-		return id;
+		return userId;
 	}
 
-	public void setUserId(UUID id) {
-		this.id = id;
+	public void setUserId(UUID userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -80,4 +85,9 @@ public class User {
 		return orders;
 	}
 	
+	public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
+		//Verifica se a senha descriptografada (raw) é igual a senha criptografada(encode)
+		var encodedPassword = passwordEncoder.encode(loginRequest.password());
+		return passwordEncoder.matches(this.password, encodedPassword);
+	}
 }

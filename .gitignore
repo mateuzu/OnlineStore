@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Arquivos sensíveis
+app.key
+app.pub
+*.key
+*.pub
