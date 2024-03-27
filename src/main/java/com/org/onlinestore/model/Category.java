@@ -21,7 +21,7 @@ public class Category implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Column(name = "categoryId")
+	@Column(name = "category_id")
 	private UUID categoryId;
 	
 	@Column(name = "name")

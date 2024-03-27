@@ -23,7 +23,7 @@ public class Payment implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Column(name = "paymentId")
+	@Column(name = "payment_id")
 	private UUID paymentId;
 	
 	@Column(name = "moment")

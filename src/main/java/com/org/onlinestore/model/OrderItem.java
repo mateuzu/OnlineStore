@@ -16,7 +16,7 @@ public class OrderItem implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	@Column(name = "orderItemId")
+	@Column(name = "order_item_id")
 	private OrderItemPK orderItemId = new OrderItemPK();
 	
 	private Integer quantity;
@@ -75,4 +75,7 @@ public class OrderItem implements Serializable{
 		this.price = price;
 	}
 	
+	public Double getSubTotal() {
+		return price * quantity;
+	}
 }

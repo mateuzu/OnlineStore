@@ -41,6 +41,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(HttpMethod.POST, "/v1/users").permitAll()
 						.requestMatchers(HttpMethod.POST, "/login").permitAll() //liberando rota de login
+						.requestMatchers(HttpMethod.GET, "/v1/product/all").permitAll()
 						.anyRequest().authenticated()) //especifica que qualquer requisição exige autenticação do usuário
 				.csrf(csrf -> csrf.disable()) //desativa o csrf, obs: deixar desativado apenas LOCALMENTE
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())) //utiliza as condfigurações padrões de autenticação do OAuth2

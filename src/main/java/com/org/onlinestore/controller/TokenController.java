@@ -1,6 +1,7 @@
 package com.org.onlinestore.controller;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.org.onlinestore.controller.dto.LoginRequest;
 import com.org.onlinestore.controller.dto.LoginResponse;
+import com.org.onlinestore.model.Role;
 import com.org.onlinestore.repository.UserRepository;
 
 /* Fluxo de login + autenticação
@@ -54,12 +56,18 @@ public class TokenController {
 		var now = Instant.now(); //Determina a hora atual
 		var expiresIn = 300L; //Determina o tempo de expiração do TOKEN. Nesse caso 300 segunos = 5 minutos 
 		
+		var scopes = user.get().getRoles()
+				.stream()
+					.map(Role::getName)
+					.collect(Collectors.joining(" "));
+		
 		//3. se sim, monta o token JWT : Claims = atributos JSON do Token JWT
 		var claims = JwtClaimsSet.builder()
 				.issuer("onlinestore-backend") //convençao para determinar quem está gerando o token
 				.subject(user.get().getUserId().toString()) //convençao para determinar o usuário como subject do JSON e trafegar o usuario no JSON
 				.issuedAt(now) //convençao para determinar quando o token foi gerado
 				.expiresAt(now.plusSeconds(expiresIn)) //convençao para determinar quando o token irá expirar. nesse caso será a hora atual + 300 segundos
+				.claim("scope", scopes)
 				.build(); //costroi o JWTClaimsSet
 		
 		//4. assinar o token com a chave privada (encode) utilizando as claims

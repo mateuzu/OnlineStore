@@ -1,6 +1,7 @@
 package com.org.onlinestore.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class Order implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Column(name = "orderId")
+	@Column(name = "order_id")
 	private UUID orderId;
 	
 	@Column(name = "moment")
@@ -101,6 +102,14 @@ public class Order implements Serializable{
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+	
+	public BigDecimal getTotal() {
+		double sum = 0.0;
+		for(OrderItem item : items) {
+			sum += item.getSubTotal();
+		}
+		return BigDecimal.valueOf(sum);
 	}
 	
 }

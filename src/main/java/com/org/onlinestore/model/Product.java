@@ -1,6 +1,7 @@
 package com.org.onlinestore.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class Product implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Column(name = "productId")
+	@Column(name = "product_id")
 	private UUID productId;
 	
 	@Column(name = "name")
@@ -33,7 +34,10 @@ public class Product implements Serializable{
 	private String description;
 	
 	@Column(name = "price")
-	private Double price;
+	private BigDecimal price;
+	
+	@Column(name = "quantity")
+	private Integer quantity;
 	
 	@Column(name = "urlImg")
 	private String urlImg;
@@ -48,11 +52,12 @@ public class Product implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(UUID productId, String name, String description, Double price, String urlImg) {
+	public Product(UUID productId, String name, String description, BigDecimal price, Integer quantity, String urlImg) {
 		this.productId = productId;
 		this.name = name;
 		this.description = description;
 		this.price = price;
+		this.quantity = quantity;
 		this.urlImg = urlImg;
 	}
 
@@ -80,12 +85,20 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
-	public Double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+	
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getUrlImg() {

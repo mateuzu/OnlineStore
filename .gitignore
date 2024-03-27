@@ -35,5 +35,6 @@ build/
 ### Arquivos sensíveis
 app.key
 app.pub
+application.properties
 *.key
 *.pub
